@@ -17,38 +17,38 @@ endif
 
 GITHASHHEADER = src/DebaseGitHash.h
 
-SRCS =											\
+SRCS =								\
 	src/ProcessPath-$(PLATFORM).*				\
 	src/state/StateDir-$(PLATFORM).*			\
-	src/ui/View.cpp								\
+	src/ui/View.cpp						\
 	src/main.cpp
 
 # Using CPPFLAGS for the common flags between C/C++.
 # We can't just include CFLAGS in the definition of
 # CXXFLAGS because GCC complains when supplying
 # -std=c11 to C++ files.
-CPPFLAGS =										\
-	$(INCDIRS)									\
-	$(OPTFLAGS)									\
-	-g											\
-	-fvisibility=hidden							\
-	-fstrict-aliasing							\
-	-fno-common									\
-	-MMD										\
-	-MP											\
-	-Wall										\
-	-DDEBUG=$(DEBUG)							\
+CPPFLAGS =							\
+	$(INCDIRS)						\
+	$(OPTFLAGS)						\
+	-g							\
+	-fvisibility=hidden					\
+	-fstrict-aliasing					\
+	-fno-common						\
+	-MMD							\
+	-MP							\
+	-Wall							\
+	-DDEBUG=$(DEBUG)					\
 	-DSTAGE=$(STAGE)
 
-CFLAGS =										\
-	-std=c11									\
+CFLAGS =							\
+	-std=c11						\
 
-CXXFLAGS =										\
-	-std=c++17									\
+CXXFLAGS =							\
+	-std=c++17						\
 	-fvisibility-inlines-hidden
 
-OBJCXXFLAGS =									\
-	-fobjc-arc									\
+OBJCXXFLAGS =							\
+	-fobjc-arc						\
 	-fobjc-weak
 
 OPTFLAGS = -Os
@@ -56,36 +56,34 @@ ifeq ($(DEBUG), 1)
 	OPTFLAGS = -O0 -g3
 endif
 
-INCDIRS =										\
+INCDIRS =							\
+	$(shell pkg-config --cflags libgit2)			\
 	-isystem ./lib/ncurses/include				\
-	-iquote ./lib/libgit2/include				\
-	-iquote ./src								\
+	-iquote ./src						\
 	-iquote .
+# Using guix provided
+#	-iquote ./lib/libgit2/include				\
 
-LIBDIRS =										\
-	-L./lib/libgit2/build-$(PLATFORM)			\
+LIBDIRS =							\
 	-L./lib/ncurses/build-$(PLATFORM)
+# Using guix provided
+#	-L./lib/libgit2/build-$(PLATFORM)			\
 
-LIBS =											\
-	-lgit2										\
-	-lz											\
-	-lpthread									\
-	-lformw										\
-	-lmenuw										\
-	-lpanelw									\
-	-lncursesw
+LIBS = $(shell pkg-config --libs libgit2) -lz -lpthread -lformw -lmenuw -lpanelw -lncursesw
+# Using guix provided
+#	-lgit2							\
 
 ifeq ($(PLATFORM), mac)
-	CPPFLAGS +=									\
+	CPPFLAGS +=						\
 		$(addprefix -arch , $(ARCHS))			\
-		-mmacosx-version-min=10.15				\
+		-mmacosx-version-min=10.15			\
 		-fdiagnostics-show-note-include-stack
 	
-	LIBS +=										\
-		-framework Foundation					\
-		-framework IOKit						\
-		-framework CoreServices					\
-		-framework Security						\
+	LIBS +=							\
+		-framework Foundation				\
+		-framework IOKit				\
+		-framework CoreServices				\
+		-framework Security				\
 		-framework SystemConfiguration			\
 		-liconv
 endif
