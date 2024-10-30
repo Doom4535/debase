@@ -1510,9 +1510,16 @@ private:
     }
     
     void _cursesInit() noexcept {
+        // If building against bundled ncurses, enable ncurses defaults config
+#ifdef __has_include
+#  if __has_include("nlohmann/json.hpp")
+#  elif __has_include("nlohmann/json.h")
+#  else
         // Default Linux installs may not contain the /usr/share/terminfo database,
         // so provide a fallback terminfo that usually works.
         nc_set_default_terminfo(xterm_256color, sizeof(xterm_256color));
+#  endif
+#endif
         
         // Override the terminfo 'kmous' and 'XM' properties to permit mouse-moved events,
         // in addition to the default mouse-down/up events.

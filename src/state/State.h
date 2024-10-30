@@ -7,7 +7,18 @@
 #include "lib/toastbox/RuntimeError.h"
 #include "lib/toastbox/FileDescriptor.h"
 #include "lib/toastbox/FDStream.h"
-#include "lib/nlohmann/json.h"
+// Use system installed nlohmann-json if availible
+#ifdef __has_include
+#  if __has_include("nlohmann/json.hpp")
+#    include "nlohmann/json.hpp"
+#  elif __has_include("nlohmann/json.h")
+#    include "nlohmann/json.h"
+#  else
+#    include "lib/nlohmann/json.h"
+#  endif
+#else
+#  include "lib/nlohmann/json.h"
+#endif
 #include "git/Git.h"
 #include "git/Modify.h"
 #include "Version.h"
