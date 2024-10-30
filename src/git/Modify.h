@@ -1,6 +1,8 @@
 #pragma once
-#include <fstream>
+#include <algorithm>
 #include <deque>
+#include <fstream>
+#include <functional>
 #include "Git.h"
 #include "Conflict.h"
 #include "Editor.h"

@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <filesystem>
+#include <map>
 #include "Git.h"
 #include "lib/toastbox/String.h"
 

@@ -1,28 +1,32 @@
 #pragma once
 #include <set>
 #include <fstream>
+#include <map>
 #include <sys/stat.h>
 #include <sys/file.h>
 #include <fcntl.h>
 #include "lib/toastbox/RuntimeError.h"
 #include "lib/toastbox/FileDescriptor.h"
 #include "lib/toastbox/FDStream.h"
+#include "git/Git.h"
+#include "git/Modify.h"
+#include "Version.h"
+#include "History.h"
+
 // Use system installed nlohmann-json if availible
 #ifdef __has_include
 #  if __has_include("nlohmann/json.hpp")
 #    include "nlohmann/json.hpp"
+#    define USE_HOST_NLOHMANN_JSON
 #  elif __has_include("nlohmann/json.h")
 #    include "nlohmann/json.h"
+#    define USE_HOST_NLOHMANN_JSON
 #  else
 #    include "lib/nlohmann/json.h"
 #  endif
 #else
 #  include "lib/nlohmann/json.h"
 #endif
-#include "git/Git.h"
-#include "git/Modify.h"
-#include "Version.h"
-#include "History.h"
 
 namespace State {
 
