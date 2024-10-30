@@ -16,6 +16,7 @@
 #include "hash.h"
 #include "index.h"
 #include "merge_driver.h"
+#include "pcre.h"
 #include "pool.h"
 #include "mwindow.h"
 #include "object.h"
