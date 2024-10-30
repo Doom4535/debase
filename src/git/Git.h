@@ -9,7 +9,17 @@
 #include "lib/toastbox/RuntimeError.h"
 #include "lib/toastbox/Defer.h"
 #include "lib/toastbox/String.h"
-#include "lib/libgit2/include/git2.h"
+
+// Use system installed libgit2 if availible
+#ifdef __has_include
+#  if __has_include("git2.h")
+#    include "git2.h"
+#    define USE_SYSTEM_LIBGIT2
+#  endif
+#endif
+#ifndef USE_SYSTEM_LIBGIT2
+#  include "lib/libgit2/include/git2.h"
+#endif
 
 namespace Git {
 using namespace Toastbox;
