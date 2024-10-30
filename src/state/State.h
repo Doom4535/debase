@@ -21,10 +21,9 @@
 #  elif __has_include("nlohmann/json.h")
 #    include "nlohmann/json.h"
 #    define USE_HOST_NLOHMANN_JSON
-#  else
-#    include "lib/nlohmann/json.h"
 #  endif
-#else
+#endif
+#ifndef USE_HOST_NLOHMANN_JSON
 #  include "lib/nlohmann/json.h"
 #endif
 

@@ -4,12 +4,22 @@
 
 #define NCURSES_WIDECHAR 1
 
-#if __APPLE__
-#include "lib/ncurses/build-mac/include/curses.h"
-#include "lib/ncurses/build-mac/include/panel.h"
-#elif __linux__
-#include "lib/ncurses/build-linux/include/curses.h"
-#include "lib/ncurses/build-linux/include/panel.h"
+// Determine if host or bundled curses library should be used
+#ifdef __has_include
+#  if __has_include("curses.h")
+#    include "curses.h"
+#    include "panel.h"
+#    define USE_HOST_CURSES
+#  endif
+#endif
+#ifndef USE_HOST_CURSES
+#  if __APPLE__
+#    include "lib/ncurses/build-mac/include/curses.h"
+#    include "lib/ncurses/build-mac/include/panel.h"
+#  elif __linux__
+#    include "lib/ncurses/build-linux/include/curses.h"
+#    include "lib/ncurses/build-linux/include/panel.h"
+#  endif
 #endif
 
 #include "lib/toastbox/Bitfield.h"
