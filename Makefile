@@ -62,21 +62,12 @@ INCDIRS =							\
 	$(shell pkg-config --cflags nlohmann_json)		\
 	-iquote ./src						\
 	-iquote .
-# Using guix provided
-#	-iquote ./lib/libgit2/include				\
-#	-isystem ./lib/ncurses/include				\
-
-LIBDIRS =							\
-#	-L./lib/ncurses/build-$(PLATFORM)
-# Using guix provided
-#	-L./lib/libgit2/build-$(PLATFORM)			\
+	
+LIBDIRS = -L./lib/ncurses/build-$(PLATFORM)
+#LIBDIRS = ' '
 
 LIBS = $(shell pkg-config --libs libgit2 ncurses ncursesw)	\
        -lz -lpthread -lformw -lmenuw -lpanelw
-# Using guix provided
-#	-lgit2							\
-#	-lncurses
-#	-lncursesw
 
 ifeq ($(PLATFORM), mac)
 	CPPFLAGS +=						\
